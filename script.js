@@ -90,9 +90,14 @@ timeOfDayArray12 = ['12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM','7 AM','8 
 for(i=0;i<timeOfDayArray12.length;i++) {    
    hourStamp[i].textContent = timeOfDayArray12[i];
 }
+// when locking the input, a response is written at the top 
+$("button").on("click", function(){
+    var saved = $("<p>");
+    saved.text("Your input has been saved");
+    saved.css("color", "green");
+    $("header").append(saved);
 
-
-
+})
 // on the click of the lock button, the todos in the slots will be saved to local storage 
 $("button").on("click", function(){
    var todo0 =($("#0").val());
