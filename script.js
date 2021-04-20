@@ -1,13 +1,12 @@
 var fullDate = $("#currentDay"); // p tag in the header for the date
 var today = moment(); // calling momentjs and assigning variable 
-var timeBlock = $(".timeBlock") // entire section for the timline
-var container = $(".container"); // container per single hour timeline 
-var hourBlock = $(".input-group"); // input group is same as^^ 
 var hourStamp = document.querySelectorAll(".input-group-text"); // this is the span which holds the time stamp on the left side 
 var textArea = $(".form-control"); // text area where user can enter daily plans
 var presentDate = today.format('MMMM Do YYYY'); // this holds the present date 
-var lock = document.querySelectorAll(".btn");
-var todo0 =($("#0").val())
+var lock = document.querySelectorAll(".btn"); //selecting the lock button and assigning a variable 
+
+// the numbered todos are the value of each slot of time in each of the textareas. 
+var todo0 =($("#0").val()) 
 var todo1 =($("#1").val())
 var todo2 =($("#2").val())
 var todo3 =($("#3").val())
@@ -32,6 +31,7 @@ var todo21 =($("#21").val())
 var todo22 =($("#22").val())
 var todo23 =($("#23").val())
 
+//getting each todo item from local storage and displaying it in each todo time slot. 
 var input = localStorage.getItem("todo0", todo0);
 $("#0").text(input);
 var input = localStorage.getItem("todo1", todo1);
@@ -81,19 +81,19 @@ $("#22").text(input);
 var input = localStorage.getItem("todo23", todo23);
 $("#23").text(input);
 
+//time of day array for each hour of the day.
 timeOfDayArray12 = ['12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM','7 AM','8 AM','9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM','5 PM','6 PM','7 PM','8 PM','9 PM','10 PM','11 PM',]
 
 
 
-var userLog = localStorage.getItem("todo")
-
+// this allows to include each hour from the array above inside the timestamp. 
 for(i=0;i<timeOfDayArray12.length;i++) {    
    hourStamp[i].textContent = timeOfDayArray12[i];
 }
 
 
-// var userInput = $('')
 
+// on the click of the lock button, the todos in the slots will be saved to local storage 
 $("button").on("click", function(){
    var todo0 =($("#0").val());
     console.log(todo0)
@@ -216,24 +216,25 @@ $("button").on("click", function(){
  })
 
 
- 
+ // function for matching the time with the css color coordination
 function timeMatch(){
-    var currentTime = moment().hour();
+    // 
+    var currentTime = moment().hour();   //this gives us the current hour of the day
     // console.log(currentTime);
-    textArea.each(function(){
-        var timeId = parseInt($(this).attr("id"));
+    textArea.each(function(){   // for each text area, 
+        var timeId = parseInt($(this).attr("id")); //timeId is equal to the textarea with attribute id, which is the id in the text area with the number equivalent to the time stamp. timeId is the number corresponding to the time slot.  
         // console.log(timeId);
 
-        if(timeId<currentTime) {
-            $(this).addClass("past");
-            $(this).removeClass("present");
-            $(this).removeClass("future");
-        } else if (timeId === currentTime) {
-            $(this).addClass("present");
+        if(timeId<currentTime) {    // when the time slot is less than the current time, 
+            $(this).addClass("past"); // add the past css color GREY
+            $(this).removeClass("present"); // remove the present color 
+            $(this).removeClass("future"); // remove the future color
+        } else if (timeId === currentTime) { // when the time is equal to current time, 
+            $(this).addClass("present"); // we show the present class in css for RED
             $(this).removeClass("past");
             $(this).removeClass("future");
-        } else {
-            $(this).addClass("future");
+        } else {  // else when the time is after the present time, 
+            $(this).addClass("future"); // we show the futue class in css for GREEN
             $(this).removeClass("present");
             $(this).removeClass("past");
         }
@@ -247,13 +248,13 @@ function timeMatch(){
 
 
 
-setInterval(timeMatch, 1000)
-timeMatch()
+setInterval(timeMatch, 1000) // here we want the time match function to run every second. So on every second we call the timeMatch function. This allows for the website to automatically refresh the present time. 
+timeMatch() //here we call the timeMatch function.
 
 
-fullDate.text(presentDate) //
+fullDate.text(presentDate) //this presents the present date inside the full date variable. 
 
-// hoursLog.append(hours)
+
 
 
 
